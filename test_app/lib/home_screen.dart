@@ -1,61 +1,72 @@
-import 'dart:math';
+import 'dart:developer';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:test_app/model/user_model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:test_app/block/fetch_picture_bloc.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class StreamBuilderExample extends StatefulWidget {
+  const StreamBuilderExample({required this.delay, super.key});
+
+  final Duration delay;
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<StreamBuilderExample> createState() => _StreamBuilderExampleState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  List<UserModel>? _users;
-  Future<void> fetchPicture() async {
-    final dio = Dio();
-    final result = await dio.get('https://jsonplaceholder.typicode.com/users');
-    _users = (result.data as List<dynamic>)
-        .map((e) => UserModel.fromMap(e))
-        .toList();
-
-    setState(() {});
-  }
-
+class _StreamBuilderExampleState extends State<StreamBuilderExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _users == null
-                ? Container(
-                    height: 300,
-                    width: 300,
-                    color: Colors.red,
-                  )
-                : Expanded(
-                    child: ListView.builder(
-                        itemCount: _users?.length ?? 0,
-                        itemBuilder: (context, index) => ListTile(
-                              leading: Text(index.toString()),
-                              title: Text(_users?[index].name ?? ''),
-                              subtitle: Text(_users?[index].name ?? ''),
-                            )),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            height: 50,
+          ),
+          BlocBuilder<FetchPictureBloc, FetchPictureState>(
+              builder: (context, state) {
+            if (state is LaodingPictureState) {
+              return Center(child: CircularProgressIndicator());
+            } else if (state is SuccessPictureState) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                      onPressed: () {
+                        context
+                            .read<FetchPictureBloc>()
+                            .add(FetchDogImageEvent());
+                        log(state.toString());
+                      },
+                      child: Text('fetch image')),
+                  Center(child: Image.network(state.model.message)),
+                ],
+              );
+            } else {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                      onPressed: () {
+                        context
+                            .read<FetchPictureBloc>()
+                            .add(FetchDogImageEvent());
+                        log(state.toString());
+                      },
+                      child: Text('fetch image')),
+                  SizedBox(
+                    height: 50,
                   ),
-            SizedBox(
-              height: 50,
-            ),
-            ElevatedButton(
-              onPressed: () {
-                fetchPicture();
-              },
-              child: Text('fetch pic'),
-            ),
-          ],
-        ),
+                  Center(
+                      child: Text(
+                    'no data',
+                    style: TextStyle(fontSize: 20),
+                  )),
+                ],
+              );
+            }
+          }),
+        ],
       ),
     );
   }
