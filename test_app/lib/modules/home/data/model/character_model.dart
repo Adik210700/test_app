@@ -18,7 +18,7 @@ class CharacterModel extends CharecterEntity {
         nickName: map['nickName'] ?? '',
         hogwartsHouse: map['hogwartsHouse'] ?? ' ',
         interpretedBy: map['interpretedBy'] ?? '',
-        children: map['children'] ?? [],
+        children: ((map['children'] as List).map((e) => e.toString()).toList()),
         image: map['image'] ?? '',
         birthdate: map['birthdate'] ?? '',
         index: map['index'] ?? 0);
