@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 
 String baseUrl = 'https://potterapi-fedeperin.vercel.app';

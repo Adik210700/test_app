@@ -1,7 +1,5 @@
 import 'dart:core';
 
-//import 'package:test_app/core/enum/hogearts_house.dart';
-
 class CharecterEntity {
   final String fullName;
   final String nickName;

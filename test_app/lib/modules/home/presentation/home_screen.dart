@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-//import 'package:test_app/core/services/dio_settings.dart';
-//import 'package:test_app/modules/home/domain/repository/character_repository.dart';
-import 'package:test_app/modules/home/presentation/bloc/fetch_all_characters_bloc.dart';
+import 'package:test_app/core/constans/app_dimensions.dart';
+import 'package:test_app/core/extension/double_extension.dart';
+import 'package:test_app/core/theme/app_colors.dart';
+import 'package:test_app/core/theme/app_textstyles.dart';
+import 'package:test_app/modules/home/presentation/widgets/home_background_widget.dart';
+import 'package:test_app/modules/home/presentation/widgets/home_characters_list/home_characters_list_widget.dart';
+import 'package:test_app/modules/home/presentation/widgets/home_houses_widget/home_hauses_widget.dart';
+import 'package:test_app/modules/home/presentation/widgets/home_profile_widgets.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -10,44 +14,44 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        backgroundColor: AppColors.bakGroundColor,
+        body: Stack(
           children: [
-            BlocBuilder<FetchAllCharactersBloc, AppState>(
-                builder: (context, state) {
-              if (state is LoadingState) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              if (state is SuccessState) {
-                return Expanded(
-                  child: ListView.builder(
-                      itemCount: state.characters.length,
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                            leading:
-                                Image.network(state.characters[index].image),
-                            title: Text(state.characters[index].fullName),
-                            subtitle: Text(
-                              state.characters[index].nickName,
-                            ));
-                      }),
-                );
-              }
-              return Center(child: Text('Nodata'));
-            }),
-            ElevatedButton(
-                onPressed: () {
-                  context
-                      .read<FetchAllCharactersBloc>()
-                      .add(FetchAllCharactersEvent());
-                },
-                child: Text('Fetch Characters')),
+            HomeBackgroundWidget(),
+            ListView(
+              children: [
+                HomeProfileWidgets(),
+                AppDimensions.hugePaddinf.verticalSpace,
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: AppDimensions.mediumPaddinf),
+                  child: Text(
+                    'Hauses',
+                    style: AppTextstyles.bodyBold
+                        .copyWith(fontSize: 18, color: AppColors.textColor),
+                  ),
+                ),
+                AppDimensions.mediumPaddinf.verticalSpace,
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: AppDimensions.mediumPaddinf),
+                  child: HomeHausesWidget(),
+                ),
+                AppDimensions.hugePaddinf.verticalSpace,
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: AppDimensions.mediumPaddinf),
+                  child: Text(
+                    'Characters',
+                    style: AppTextstyles.bodyBold
+                        .copyWith(fontSize: 18, color: AppColors.textColor),
+                  ),
+                ),
+                AppDimensions.largePaddinf.verticalSpace,
+                HomeCharactersListWidget(),
+              ],
+            )
           ],
-        ),
-      ),
-    );
+        ));
   }
 }
