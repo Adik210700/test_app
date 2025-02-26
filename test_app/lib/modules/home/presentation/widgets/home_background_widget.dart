@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/core/theme/app_colors.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:test_app/modules/home/presentation/provider/home_bg_provider.dart';
 
 class HomeBackgroundWidget extends StatelessWidget {
   const HomeBackgroundWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final providerW = context.watch<HomeBgProvider>();
     return Stack(
       children: [
         Positioned(
@@ -14,11 +16,11 @@ class HomeBackgroundWidget extends StatelessWidget {
             height: 1,
             width: 1,
             decoration: BoxDecoration(
-                color: AppColors.bakGroundBlureColor,
+                color: providerW.activeColor,
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.bakGroundBlureColor.withOpacity(0.3),
+                    color: providerW.activeColor.withOpacity(0.3),
                     spreadRadius: 300,
                     blurRadius: 200,
                   )
@@ -32,11 +34,11 @@ class HomeBackgroundWidget extends StatelessWidget {
             height: 1,
             width: 1,
             decoration: BoxDecoration(
-                color: AppColors.bakGroundBlureColor,
+                color: providerW.activeColor,
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.bakGroundBlureColor.withOpacity(0.3),
+                    color: providerW.activeColor.withOpacity(0.3),
                     spreadRadius: 300,
                     blurRadius: 200,
                   )
