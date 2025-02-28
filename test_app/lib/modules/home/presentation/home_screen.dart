@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_app/core/constans/app_dimensions.dart';
+import 'package:test_app/core/extension/context_extension.dart';
 import 'package:test_app/core/extension/double_extension.dart';
 import 'package:test_app/core/theme/app_colors.dart';
 import 'package:test_app/core/theme/app_textstyles.dart';
@@ -9,6 +10,7 @@ import 'package:test_app/modules/home/presentation/widgets/home_background_widge
 import 'package:test_app/modules/home/presentation/widgets/home_characters_list/home_characters_list_widget.dart';
 import 'package:test_app/modules/home/presentation/widgets/home_houses_widget/home_hauses_widget.dart';
 import 'package:test_app/modules/home/presentation/widgets/home_profile_widgets.dart';
+import 'package:test_app/modules/profile/presentation/profile_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -22,7 +24,11 @@ class HomeScreen extends StatelessWidget {
             HomeBackgroundWidget(),
             ListView(
               children: [
-                HomeProfileWidgets(),
+                GestureDetector(
+                    onTap: () {
+                      context.push(const ProfileScreen());
+                    },
+                    child: HomeProfileWidgets()),
                 AppDimensions.hugePaddinf.verticalSpace,
                 Padding(
                   padding:

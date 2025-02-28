@@ -7,6 +7,7 @@ import 'package:test_app/modules/home/domain/usecase/fetch_all_characters_usecas
 import 'package:test_app/modules/home/presentation/bloc/fetch_all_characters_bloc.dart';
 import 'package:test_app/modules/home/presentation/home_screen.dart';
 import 'package:test_app/modules/home/presentation/provider/home_bg_provider.dart';
+import 'package:test_app/modules/profile/presentation/provider/user_provider.dart';
 
 void main() {
   runApp(const TestApp());
@@ -25,6 +26,9 @@ class TestApp extends StatelessWidget {
               repository: CharacterRepository(dio: DioSettings().dio),
             ),
           ),
+        ),
+        ChangeNotifierProvider(
+          create: (create) => UserProvider(),
         ),
         ChangeNotifierProvider(
           create: (context) => HomeBgProvider(),

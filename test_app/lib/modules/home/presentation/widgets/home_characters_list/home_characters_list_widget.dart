@@ -8,7 +8,7 @@ import 'package:test_app/core/theme/app_colors.dart';
 import 'package:test_app/core/theme/app_textstyles.dart';
 import 'package:test_app/modules/home/presentation/bloc/fetch_all_characters_bloc.dart';
 import 'package:test_app/modules/home/presentation/widgets/home_characters_list/home_characters_list_element_widget.dart';
-import 'package:test_app/modules/profile/pressentation/profile_details_screen.dart';
+import 'package:test_app/modules/character_details/pressentation/character_details_screen.dart';
 
 class HomeCharactersListWidget extends StatefulWidget {
   const HomeCharactersListWidget({super.key});
@@ -51,7 +51,7 @@ class _HomeCharactersListWidgetState extends State<HomeCharactersListWidget> {
             itemCount: state.characters.length,
             itemBuilder: (context, index) => GestureDetector(
                   onTap: () => context.push(
-                    ProfileDetailsScreen(
+                    CharacterDetailsScreen(
                       house:
                           getHouseName(state.characters[index].hogwartsHouse),
                       character: state.characters[index],
