@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_app/core/theme/app_colors.dart';
 import 'package:test_app/core/theme/app_textstyles.dart';
+import 'package:test_app/modules/profile/presentation/provider/user_provider.dart';
 
 class HomeProfileWidgets extends StatelessWidget {
   const HomeProfileWidgets({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final providerW = context.watch<UserProvider>();
     return ListTile(
       title: Text(
-        'Hi, Albus,',
+        'Hi, ${providerW.name.split(' ').first}',
         style: AppTextstyles.bodyBold
             .copyWith(color: AppColors.textColor, fontSize: 18),
       ),

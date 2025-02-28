@@ -10,4 +10,7 @@ abstract class AppDimensions {
   static const double smolBorderRadius = 8;
   static const double mediumBorderRadius = 15;
   static const double largeBorderRadius = 25;
+
+// heights
+  static const double buttonHeight = 58;
 }
